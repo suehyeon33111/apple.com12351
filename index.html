@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>MyApple 고퀄 홈페이지</title>
+<title>MyApple 체험 사이트</title>
 <style>
   /* 전체 */
   body, html {
@@ -13,10 +13,10 @@
     color: #111;
     scroll-behavior: smooth;
   }
-
   a { text-decoration: none; color: inherit; }
+  button { cursor: pointer; }
 
-  /* 상단 네비 */
+  /* 네비게이션 */
   nav {
     position: fixed;
     top: 0; left: 0;
@@ -48,7 +48,7 @@
     .menu-toggle { display: block; }
   }
 
-  /* 히어로 배너 */
+  /* 히어로 */
   .hero {
     position: relative;
     width: 100%;
@@ -71,7 +71,6 @@
     border-radius: 20px;
     background: #0071e3;
     color: #fff;
-    cursor: pointer;
     transition: background 0.3s, transform 0.2s;
   }
   .hero button:hover { background: #005bb5; transform: translateY(-3px); }
@@ -93,18 +92,47 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     transition: transform 0.4s, box-shadow 0.4s;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
   }
   .product-card:hover { transform: translateY(-15px); box-shadow: 0 15px 30px rgba(0,0,0,0.25); }
   .product-card img { width: 100%; display: block; }
-  .product-card h3 { padding: 20px; font-size: 22px; margin: 0; }
+  .product-card h3 { padding: 15px 20px 5px; font-size: 22px; margin: 0; }
+  .product-card button {
+    margin: 10px 20px 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    background: #0071e3;
+    color: #fff;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .product-card button:hover { background: #005bb5; transform: translateY(-2px); }
+
+  /* 모달 */
+  .modal-bg {
+    display: none;
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.6);
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  }
+  .modal {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  }
+  .modal button { margin-top: 20px; background:#0071e3; color:#fff; padding:10px 20px; border-radius:12px; border:none; cursor:pointer;}
+  .modal button:hover { background:#005bb5; }
 
   /* 푸터 */
-  footer {
-    background: #111;
-    color: #fff;
-    padding: 60px 20px;
-    text-align: center;
-  }
+  footer { background:#111; color:#fff; padding:60px 20px; text-align:center; }
+
 </style>
 </head>
 <body>
@@ -129,21 +157,33 @@
 <div class="hero">
   <h1>혁신의 시작</h1>
   <p>당신의 삶을 바꾸는 새로운 경험</p>
-  <button>지금 보기</button>
+  <button class="btn-show-modal">자세히 보기</button>
 </div>
 
 <div class="products">
   <div class="product-card">
     <img src="https://images.unsplash.com/photo-1541807084-5c52f3c77e0b?crop=entropy&cs=tinysrgb&fit=max&w=600&h=400">
     <h3>MacBook Pro</h3>
+    <button class="btn-show-modal">자세히 보기</button>
   </div>
   <div class="product-card">
     <img src="https://images.unsplash.com/photo-1512499617640-c2f99912b73e?crop=entropy&cs=tinysrgb&fit=max&w=600&h=400">
     <h3>iPhone 15</h3>
+    <button class="btn-show-modal">자세히 보기</button>
   </div>
   <div class="product-card">
     <img src="https://images.unsplash.com/photo-1580910051074-9b74d06f0e11?crop=entropy&cs=tinysrgb&fit=max&w=600&h=400">
     <h3>iPad Pro</h3>
+    <button class="btn-show-modal">자세히 보기</button>
+  </div>
+</div>
+
+<!-- 모달 -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h2>알림</h2>
+    <p>현재 쇼핑은 지원하지 않습니다.</p>
+    <button id="closeModal">닫기</button>
   </div>
 </div>
 
@@ -152,10 +192,7 @@
 </footer>
 
 <script>
-  // 배너 슬라이드 (옵션)
-  const slides = document.querySelectorAll('.hero img');
-  let current = 0;
-  // 모바일 메뉴 토글
+  // 모바일 메뉴
   const menuToggle = document.querySelector('.menu-toggle');
   const navMenu = document.querySelector('nav ul');
   menuToggle.addEventListener('click', ()=>{
@@ -170,6 +207,18 @@
       navMenu.style.right = '0';
       navMenu.style.width = '200px';
     }
+  });
+
+  // 모달
+  const modalBg = document.getElementById('modalBg');
+  const closeModal = document.getElementById('closeModal');
+  document.querySelectorAll('.btn-show-modal').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      modalBg.style.display = 'flex';
+    });
+  });
+  closeModal.addEventListener('click', ()=>{
+    modalBg.style.display = 'none';
   });
 </script>
 
